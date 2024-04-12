@@ -1,0 +1,11 @@
+Superuser
+    username : admin
+    password : @dmin1234
+    token : b8ca4870d59f55cc77ad00023449cd45009f52c1
+
+
+
+Researcher Role
+    username : songphon
+    password : adminfuse@2024
+    token : cbdd7281e6138b1dd57871e590d9935629ed5b4d
