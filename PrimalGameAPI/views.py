@@ -3,17 +3,42 @@ from rest_framework import generics
 from .models import Primals
 from .serializers import PrimalsSerializer
 from .permissions import IsResearcherOrSuperuser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User, Group
 from .serializers import UserSerializer , UserNamePOSTSerializer
 
 # Create your views here.
+
+# Primals views
 class PrimalsView(generics.ListCreateAPIView):
     queryset = Primals.objects.all()
     serializer_class = PrimalsSerializer
-    
+    # Define permission classes for different methods
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            # Return permission classes for GET request
+            return [AllowAny()]
+        elif self.request.method == 'POST':
+            # Return permission classes for POST request
+            return [IsAuthenticated(), IsResearcherOrSuperuser()]
+        return super().get_permissions()
+
+class SinglePrimalView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Primals.objects.all()
+    serializer_class = PrimalsSerializer
+    # Define permission classes for different methods
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            # Return permission classes for GET request
+            return [AllowAny()]
+        elif self.request.method == 'PUT' or self.request.method == 'PATCH' or self.request.method == 'DELETE':
+            # Return permission classes for POST request
+            return [IsAuthenticated(), IsResearcherOrSuperuser()]
+        return super().get_permissions()
+
+
 
 ##### Group management views
 
