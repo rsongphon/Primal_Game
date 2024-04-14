@@ -21,4 +21,14 @@ class PrimalsSerializer(serializers.ModelSerializer):
         model = Primals
         fields = ['id','name']
         
+class RPiBoardsSerializer(serializers.ModelSerializer):
+    ssid = serializers.CharField(required=False, allow_blank=True)
+    ssid_password = serializers.CharField(write_only=True , required=False, allow_blank=True)
+    class Meta:
+        model = RPiBoards
+        fields = ['id','ip_address','ssid', 'ssid_password']
         
+class RPiStatesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RPiStates
+        fields = ['id','rpiboard' , 'is_occupied']

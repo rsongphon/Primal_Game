@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Primals
-from .serializers import PrimalsSerializer
+from .models import Primals , RPiBoards , RPiStates
 from .permissions import IsResearcherOrSuperuser
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User, Group
-from .serializers import UserSerializer , UserNamePOSTSerializer
+from .serializers import PrimalsSerializer , UserSerializer , UserNamePOSTSerializer , RPiBoardsSerializer , RPiStatesSerializer
 
 # Create your views here.
 
@@ -37,7 +36,40 @@ class SinglePrimalView(generics.RetrieveUpdateDestroyAPIView):
             # Return permission classes for POST request
             return [IsAuthenticated(), IsResearcherOrSuperuser()]
         return super().get_permissions()
+    
+    
+# RPi views
 
+class RPiBoradsView(generics.ListCreateAPIView):
+    queryset = RPiBoards.objects.all()
+    serializer_class = RPiBoardsSerializer
+    # Define permission classes for different methods
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            # Return permission classes for GET request
+            return [AllowAny()]
+        elif self.request.method == 'POST':
+            # Return permission classes for POST request
+            return [IsAuthenticated(), IsResearcherOrSuperuser()]
+        return super().get_permissions()
+
+class SingleRPiBoardView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RPiBoards.objects.all()
+    serializer_class = RPiBoardsSerializer
+    # Define permission classes for different methods
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            # Return permission classes for GET request
+            return [AllowAny()]
+        elif self.request.method == 'PUT' or self.request.method == 'PATCH' or self.request.method == 'DELETE':
+            # Return permission classes for POST request
+            return [IsAuthenticated(), IsResearcherOrSuperuser()]
+        return super().get_permissions()
+    
+class RPiStatesView(generics.ListCreateAPIView):
+    queryset = RPiStates.objects.all()
+    serializer_class = RPiStatesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
 
 
 ##### Group management views
