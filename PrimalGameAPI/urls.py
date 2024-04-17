@@ -7,6 +7,7 @@ urlpatterns = [
     path('rpi-boards', views.RPiBoradsView.as_view()),
     path('rpi-boards/<int:pk>', views.SingleRPiBoardView.as_view()),
     path('rpi-states', views.RPiStatesView.as_view()),
+    path('rpi-states/<int:pk>', views.SingleRPiStatesViews.as_view()),
     path('groups/researcher/users', views.ResercherGroupManangeView.as_view()),
     path('groups/researcher/users/<int:pk>', views.ResercherDeleteView.as_view()),
     

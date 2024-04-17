@@ -26,7 +26,8 @@ class RPiBoardsSerializer(serializers.ModelSerializer):
     ssid_password = serializers.CharField(write_only=True , required=False, allow_blank=True)
     class Meta:
         model = RPiBoards
-        fields = ['id','ip_address','ssid', 'ssid_password']
+        fields = ['id','board_name','ip_address','ssid', 'ssid_password']
+
         
 class RPiStatesSerializer(serializers.ModelSerializer):
     class Meta:

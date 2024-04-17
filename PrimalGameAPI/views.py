@@ -70,6 +70,11 @@ class RPiStatesView(generics.ListCreateAPIView):
     queryset = RPiStates.objects.all()
     serializer_class = RPiStatesSerializer
     permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    
+class SingleRPiStatesViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RPiStates.objects.all()
+    serializer_class = RPiStatesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
 
 
 ##### Group management views
