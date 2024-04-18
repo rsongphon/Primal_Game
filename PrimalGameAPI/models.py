@@ -15,11 +15,7 @@ class RPiStates(models.Model):
     is_occupied =  models.BooleanField(default=False)
     def __str__(self)-> str:
 	    return self.rpiboard.board_name
-    
-class LoginLogoutHist(models.Model):
-    login_hist = models.DateTimeField()
-    logout_hist = models.DateTimeField(blank=True , null=True)
-    
+ 
 class Primals(models.Model):
     name = models.CharField(max_length=255)
     def __str__(self)-> str:
@@ -34,6 +30,6 @@ class Games(models.Model):
 class GameInstances(models.Model):
     game = models.ForeignKey(Games, on_delete=models.PROTECT)
     rpiboard = models.ForeignKey(RPiBoards, on_delete=models.PROTECT , related_name="rpiboard")
-    login_hist = models.OneToOneField(LoginLogoutHist, on_delete=models.PROTECT)
     primal = models.ForeignKey(Primals, on_delete=models.PROTECT , related_name="primal")
-    
+    login_hist = models.DateTimeField()
+    logout_hist = models.DateTimeField(blank=True , null=True)

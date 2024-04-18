@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RPiBoards, RPiStates, LoginLogoutHist, Primals, Games, GameInstances
+from .models import RPiBoards, RPiStates, Primals, Games, GameInstances
 from django.contrib.auth.models import User , Group
 
 class GroupSerializer(serializers.ModelSerializer):    
@@ -33,3 +33,13 @@ class RPiStatesSerializer(serializers.ModelSerializer):
     class Meta:
         model = RPiStates
         fields = ['id','rpiboard' , 'is_occupied']
+        
+class GamesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Games
+        fields = '__all__'
+
+class GamesInstancesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameInstances
+        fields = ['id','game' , 'rpiboard' , 'login_hist' , 'primal', 'login_hist' , 'logout_hist']

@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Primals , RPiBoards , RPiStates
+from .models import Primals , RPiBoards , RPiStates , Games , GameInstances
 from .permissions import IsResearcherOrSuperuser
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User, Group
-from .serializers import PrimalsSerializer , UserSerializer , UserNamePOSTSerializer , RPiBoardsSerializer , RPiStatesSerializer
+from .serializers import PrimalsSerializer , UserSerializer , UserNamePOSTSerializer , RPiBoardsSerializer , RPiStatesSerializer , GamesSerializer , GamesInstancesSerializer
 
 # Create your views here.
 
@@ -71,10 +71,32 @@ class RPiStatesView(generics.ListCreateAPIView):
     serializer_class = RPiStatesSerializer
     permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
     
-class SingleRPiStatesViews(generics.RetrieveUpdateDestroyAPIView):
+class SingleRPiStateViews(generics.RetrieveUpdateDestroyAPIView):
     queryset = RPiStates.objects.all()
     serializer_class = RPiStatesSerializer
     permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    
+class GamesView(generics.ListCreateAPIView):
+    queryset = Games.objects.all()
+    serializer_class = GamesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+
+class SingleGameView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Games.objects.all()
+    serializer_class = GamesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    
+class GameInstancesView(generics.ListCreateAPIView):
+    queryset = GameInstances.objects.all()
+    serializer_class = GamesInstancesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+
+class SingleGameInstanceView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = GameInstances.objects.all()
+    serializer_class = GamesInstancesSerializer
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    
+    
 
 
 ##### Group management views
