@@ -1,8 +1,10 @@
 from django.urls import path 
 from . import views 
 
+app_name = 'api'
+
 urlpatterns = [ 
-    path('primals', views.PrimalsView.as_view()), 
+    path('primals', views.PrimalsView.as_view() , name = 'primals'), 
     path('primals/<int:pk>', views.SinglePrimalView.as_view()), 
     path('rpi-boards', views.RPiBoradsView.as_view()),
     path('rpi-boards/<int:pk>', views.SingleRPiBoardView.as_view()),

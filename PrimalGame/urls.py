@@ -20,6 +20,7 @@ from django.urls import path , include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('PrimalGameWebApp.urls')),
+    path('accounts/', include('PrimalGameWebappAccounts.urls')),
     path('api/',include('PrimalGameAPI.urls')),
     path('api/',include('djoser.urls')),
     path('api/',include('djoser.urls.authtoken')), 

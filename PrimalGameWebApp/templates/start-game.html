@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<section>
+    <article>
+    <!-- Add your code in the line below  -->
+    <h1>Initiate the Experiment</h1>
+
+    <!--Begin row-->
+    <div class="row">
+        <!--Begin col-->
+        <div class="column">
+
+            <select name="RPI_list">
+                {% for item in rpi_list %}
+                    <option value="{{ item.id }}">{{ item.board_name }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="PRIMAL_list">
+                {% for item in primal_list %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+        <!--End col-->
+
+    </div>
+    <!--End row-->
+    </article>
+</section>
+{% endblock %}

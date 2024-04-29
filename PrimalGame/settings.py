@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ks^9mpirh580h4b-owroqm&c#56s4s9x#a+ib*yvgkt_&w=4jd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'PrimalGameAPI',
     'PrimalGameWebApp',
+    'PrimalGameWebappAccounts',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'PrimalGame.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],  # root template
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,3 +146,8 @@ REST_FRAMEWORK = {
                                         'rest_framework.authentication.SessionAuthentication',]
     
 }
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
