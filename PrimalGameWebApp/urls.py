@@ -6,6 +6,7 @@ app_name = 'webapp'
 
 urlpatterns = [
     path("", views.home, name="home"),
+    path('profile/<username>', views.profile, name='profile'),
     path("register-primals/", views.primals, name="register-primals"),
     path("start-game/", views.start_game, name="start-game"),
 ]
