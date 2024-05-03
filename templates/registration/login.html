@@ -4,7 +4,7 @@
 <div class="card-body">
 <h4 class="card-title">Log in to your account</h4><form method="post">
 {% csrf_token %}
-<input type="hidden" name="next" value="{{ next }}">{{ form|crispy }}<button type="submit" class="btn btn-primary btn-block">Log in</button>
+<input type="hidden" name="next" value="{{ next }}">{{ form|crispy }}<button name = "submit" type="submit" class="btn btn-primary btn-block">Log in</button>
 </form>
 <p><a href="{% url 'authen:password_reset' %}">Lost password?</a></p>
 </div>

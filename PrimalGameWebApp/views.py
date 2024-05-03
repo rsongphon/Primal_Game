@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 import requests
-from PrimalGameAPI.models import RPiBoards , Primals , Games
+from PrimalGameAPI.models import RPiBoards , Primals , Games , RPiStates
 from django.contrib import messages
 from datetime import datetime
 from PrimalGameAPI import views as APIviews
@@ -55,10 +55,16 @@ def start_game(request):
             token = Token.objects.get(user=user)
 
             #Serialize the form data
+            
+            rpiboard = form.cleaned_data['rpi_name']
+            primal = form.cleaned_data['primal_name']
+            game = form.cleaned_data['game_name']
+            
+            
             data = {
-               'rpiboard': form.cleaned_data['rpi_name'],
-                'primal': form.cleaned_data['primal_name'],
-                'game': form.cleaned_data['game_name'],
+               'rpiboard': rpiboard,
+                'primal': primal,
+                'game': game,
                 'login_hist' : str(datetime.now())
             }
             # Set up the request headers with the token
@@ -74,6 +80,19 @@ def start_game(request):
             response = requests.post(url, json=data, headers=headers)
             
             if response.status_code == 201:
+                
+                # User is alreay authenthecated, we can now edit the model directly
+                
+                # Gameinstance create successful
+                # send a signal to start a game on target RPI board
+                
+                # get the state of the target RPI board
+                # Replace `pk_value` with the actual primary key value you want to retrieve
+                rpi_state = RPiStates.objects.get(rpiboard=rpiboard)
+                # Flag signal to start the game
+                rpi_state.is_occupied = False
+                rpi_state.start_game = True  
+                rpi_state.save()
                 # Redict to dashboard page
                 return redirect('/') # placeholder
             # authenthication failed
@@ -112,3 +131,15 @@ def profile(request, username):
         return render(request, 'profile.html', context={'form': form})
 
     return redirect("")
+
+
+def handle_signal(request):
+    # Handle the signal here
+    # For simplicity, let's just print a message
+    print("Signal received from HTML page!")
+    return HttpResponse("Signal received")
+
+
+
+def game_page(request):
+    return render(request, 'game_page.html')

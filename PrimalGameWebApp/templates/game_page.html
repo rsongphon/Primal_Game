@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Page</title>
+</head>
+<body>
+    <button id="signalButton">Hold Me Down!</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const button = document.getElementById('signalButton');
+            
+            let pressTimer;
+            
+            button.addEventListener('mousedown', function () {
+                pressTimer = setTimeout(() => {
+                    sendSignal(); // Call the function to send signal
+                }, 10); // Change the delay as needed
+            });
+            
+            button.addEventListener('mouseup', function () {
+                clearTimeout(pressTimer);
+            });
+            
+            button.addEventListener('mouseleave', function () {
+                clearTimeout(pressTimer);
+            });
+            
+            function sendSignal() {
+                // Use AJAX to send signal to Django backend
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', '{% url "webapp:handle-signal" %}', true); // Use Django template tag here
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log('Signal sent successfully');
+                    } else {
+                        console.error('Error sending signal');
+                    }
+                };
+                xhr.send();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -151,3 +151,6 @@ REST_FRAMEWORK = {
 LOGIN_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+CSRF_TRUSTED_ORIGINS = ["https://2267-124-120-14-161.ngrok-free.app"]

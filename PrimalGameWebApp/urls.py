@@ -9,4 +9,6 @@ urlpatterns = [
     path('profile/<username>', views.profile, name='profile'),
     path("register-primals/", views.primals, name="register-primals"),
     path("start-game/", views.start_game, name="start-game"),
+    path("game-page/",views.game_page, name="game-page"),
+    path("handle-signal/",views.handle_signal, name="handle-signal"),
 ]
