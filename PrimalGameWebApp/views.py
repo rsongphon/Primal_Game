@@ -7,6 +7,11 @@ import requests
 from PrimalGameAPI.models import RPiBoards , Primals , Games
 from django.contrib import messages
 from datetime import datetime
+from PrimalGameAPI import views as APIviews
+from django.http import HttpRequest , HttpResponse
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
 
 # Create your views here.
 def home(request):
@@ -42,26 +47,41 @@ def start_game(request):
     if request.method == 'POST':
         form = StartGameForm(request.POST)
         if form.is_valid():
-            # Serialize the form data
+
+            # Get current user in session
+            user = User.objects.get(username=request.user)
+            
+            # Assuming you have already generated a token for the user
+            token = Token.objects.get(user=user)
+
+            #Serialize the form data
             data = {
-                'rpiboard': form.cleaned_data['rpi_name'],
+               'rpiboard': form.cleaned_data['rpi_name'],
                 'primal': form.cleaned_data['primal_name'],
                 'game': form.cleaned_data['game_name'],
-                'login_hist' : datetime.now()
+                'login_hist' : str(datetime.now())
             }
-            
+            # Set up the request headers with the token
+            headers = {
+                'Authorization': f'Token {token}',
+                'Content-Type': 'application/json'  # Adjust content type if necessary
+            }
             # POST to /api/games-instances
             url = request.build_absolute_uri(reverse('api:game-instance'))
             
             # Make a POST request to your API endpoint
-            response = requests.post(url, data=data)
+            # Send the POST request with the data and headers
+            response = requests.post(url, json=data, headers=headers)
             
             if response.status_code == 201:
                 # Redict to dashboard page
-                return redirect('webapp') # placeholder
+                return redirect('/') # placeholder
             # authenthication failed
             elif response.status_code == 401:
                 return JsonResponse({'errors': 'Unauthorized'})
+            else:
+                print(response)
+                return JsonResponse({'errors': 'something wrong'})
     
     
     else:
