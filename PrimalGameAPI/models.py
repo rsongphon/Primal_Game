@@ -14,6 +14,7 @@ class RPiStates(models.Model):
     rpiboard = models.OneToOneField(RPiBoards, on_delete=models.CASCADE)
     is_occupied =  models.BooleanField(default=False)
     start_game =  models.BooleanField(default=False)
+    gp17 = models.BooleanField(default=False)
     def __str__(self)-> str:
 	    return self.rpiboard.board_name
  

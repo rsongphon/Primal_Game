@@ -32,7 +32,7 @@ class RPiBoardsSerializer(serializers.ModelSerializer):
 class RPiStatesSerializer(serializers.ModelSerializer):
     class Meta:
         model = RPiStates
-        fields = ['id','rpiboard' , 'is_occupied', 'start_game']
+        fields = '__all__'
         
 class GamesSerializer(serializers.ModelSerializer):
     class Meta:

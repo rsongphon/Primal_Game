@@ -133,13 +133,21 @@ def profile(request, username):
     return redirect("")
 
 
-def handle_signal(request):
-    # Handle the signal here
-    # For simplicity, let's just print a message
-    print("Signal received from HTML page!")
+def game_push_button_handle_signal(request):
+    
+    event = request.GET['event']
+    print(event)
+    
+    if event == 'press':
+        # Handle the signal here
+        # For simplicity, let's just print a message
+        print("button press")
+    elif event == 'release':
+        print("button leave")
+    
     return HttpResponse("Signal received")
 
 
 
-def game_page(request):
-    return render(request, 'game_page.html')
+def game_push_button_page(request):
+    return render(request, 'game_push_button.html')

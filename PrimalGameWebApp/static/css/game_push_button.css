@@ -1,0 +1,22 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Change the background color as needed */
+}
+
+.circle {
+    width: 200px; /* Change the width and height for the size of the circle */
+    height: 200px;
+    background-color: red;
+    border-radius: 50%; /* Makes the square div into a circle */
+    cursor: pointer;
+}
+
+/* Add styles for the pressed state */
+.circle.pressed {
+    background-color: green; /* Change to green when pressed */
+}
