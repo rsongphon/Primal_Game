@@ -9,3 +9,8 @@ Researcher Role
     username : songphon
     password : adminfuse@2024
     token : cbdd7281e6138b1dd57871e590d9935629ed5b4d
+
+
+RPi client
+    username : rpiclient
+    password : board@primal1234

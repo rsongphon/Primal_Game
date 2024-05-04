@@ -4,13 +4,14 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 import requests
-from PrimalGameAPI.models import RPiBoards , Primals , Games , RPiStates
+from PrimalGameAPI.models import RPiBoards , Primals , Games , RPiStates , GameInstances
 from django.contrib import messages
 from datetime import datetime
 from PrimalGameAPI import views as APIviews
 from django.http import HttpRequest , HttpResponse
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from django.http import Http404
 
 
 # Create your views here.
@@ -133,21 +134,48 @@ def profile(request, username):
     return redirect("")
 
 
-def game_push_button_handle_signal(request):
+def game_push_button_handle_signal(request, gameinstance):
     
     event = request.GET['event']
-    print(event)
     
-    if event == 'press':
-        # Handle the signal here
-        # For simplicity, let's just print a message
-        print("button press")
-    elif event == 'release':
-        print("button leave")
+    try:
+        # get gameinstance object 
+        gameinst =  GameInstances.objects.get(pk=gameinstance)
+        
+        # Get info
+        rpiboard_id = gameinst.rpiboard.pk
+
+        try : 
+            # get rpi state
+            rpi_state = RPiStates.objects.get(rpiboard=rpiboard_id)
+            
+        except RPiStates.DoesNotExist:
+            raise Http404("No RPiStates matches the given query.")
+        
+        if event == 'press':
+            # Handle the signal here
+            rpi_state.gp17 = True
+            rpi_state.save()
+            # For simplicity, let's just print a message
+            print("button press")
+        elif event == 'release':
+            rpi_state.gp17 = False
+            rpi_state.save()
+            print("button leave")
+            
+        return HttpResponse("Signal received")
+        
+    except GameInstances.DoesNotExist:
+        raise Http404("No GameInstances matches the given query.")
     
-    return HttpResponse("Signal received")
+    
+    
+
+
+    
+ 
 
 
 
-def game_push_button_page(request):
+def game_push_button_page(request, gameinstance):
     return render(request, 'game_push_button.html')

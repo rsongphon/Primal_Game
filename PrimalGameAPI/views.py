@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import Primals , RPiBoards , RPiStates , Games , GameInstances
-from .permissions import IsResearcherOrSuperuser
+from .permissions import IsResearcherOrSuperuser , IsRPiClient
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -63,7 +63,7 @@ class SingleRPiBoardView(generics.RetrieveUpdateDestroyAPIView):
             return [AllowAny()]
         elif self.request.method == 'PUT' or self.request.method == 'PATCH' or self.request.method == 'DELETE':
             # Return permission classes for POST request
-            return [IsAuthenticated(), IsResearcherOrSuperuser()]
+            return [IsAuthenticated(), IsResearcherOrSuperuser() , IsRPiClient()]
         return super().get_permissions()
     
 class RPiStatesView(generics.ListCreateAPIView):
@@ -74,7 +74,7 @@ class RPiStatesView(generics.ListCreateAPIView):
 class SingleRPiStateViews(generics.RetrieveUpdateDestroyAPIView):
     queryset = RPiStates.objects.all()
     serializer_class = RPiStatesSerializer
-    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser, IsRPiClient]
     
 class GamesView(generics.ListCreateAPIView):
     queryset = Games.objects.all()
@@ -94,7 +94,7 @@ class GameInstancesView(generics.ListCreateAPIView):
 class SingleGameInstanceView(generics.RetrieveUpdateDestroyAPIView):
     queryset = GameInstances.objects.all()
     serializer_class = GamesInstancesSerializer
-    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser]
+    permission_classes = [IsAuthenticated, IsResearcherOrSuperuser, IsRPiClient]
     
     
 
