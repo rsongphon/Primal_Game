@@ -16,7 +16,8 @@ from django.http import Http404
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    rpi_states = RPiStates.objects.all()  # Retrieve all instances of YourModel
+    return render(request, "index.html",  {'rpi_states': rpi_states , 'user': request.user})
 
 
 def primals(request):
@@ -41,7 +42,7 @@ def primals(request):
                 return JsonResponse({'errors': 'Unauthorized'})
     else:
         form = PrimalsForm()
-    return render(request, 'register-primals.html', {'form': form})
+    return render(request, 'register-primals.html', {'form': form , 'user': request.user})
 
 
 def start_game(request):
@@ -110,7 +111,7 @@ def start_game(request):
     
     else:
         form = StartGameForm()
-        return render(request, 'start-game.html', {'form': form})
+        return render(request, 'start-game.html', {'form': form ,'user': request.user})
 
 
 
@@ -133,7 +134,7 @@ def profile(request, username):
     user = get_user_model().objects.filter(username=username).first()
     if user:
         form = UserUpdateForm(instance=user)
-        return render(request, 'profile.html', context={'form': form})
+        return render(request, 'profile.html', context={'form': form , 'user': request.user})
 
     return redirect("")
 
@@ -171,13 +172,6 @@ def game_push_button_handle_signal(request, gameinstance):
         
     except GameInstances.DoesNotExist:
         raise Http404("No GameInstances matches the given query.")
-    
-    
-    
-
-
-    
- 
 
 
 

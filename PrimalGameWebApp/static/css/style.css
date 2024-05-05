@@ -214,6 +214,11 @@ footer p {
 
   }
 
+  .center_startgame {
+    margin: auto;
+    width: 25%;
+    padding: 10px;
+  }
 
   .videowrap {
 	position: relative;
@@ -230,9 +235,37 @@ footer p {
 	height: 100%;
 }
 
+.img_footer{
+    width: auto; /* Automatically adjust the width to maintain aspect ratio */
+    height: 10vh; /* Set the height to 50% of the viewport height */
+}
+
+.img_header{
+    width: auto; /* Automatically adjust the width to maintain aspect ratio */
+    height: 10vh; /* Set the height to 50% of the viewport height */
+}
+
 .menu-price{
     display: block;
     font-size: 1rem;
+}
+
+.authennav {
+    float: right; /* Or use other positioning techniques like flexbox or grid */
+  }
+
+.status-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+.status-green {
+    background-color: green;
+}
+.status-red {
+    background-color: red;
 }
 
 @media (max-width: 800px) {

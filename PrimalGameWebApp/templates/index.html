@@ -9,17 +9,19 @@
 <section>
   <article>
     <h2>Experiment running</h2>
-    <img src="{% static 'img/grill.jpg' %}" />
     <p>
       Current status of running experiment
     </p>
-    <p>
-      Loren Ipsum
-    </p>
+    {% for rpi_state in rpi_states %}
+    <div>
+      <div class="status-circle {% if rpi_state.is_occupied %}status-red{% else %}status-green{% endif %}"></div>
+      <span>{{ rpi_state.rpiboard }}</span>
+      <br>
+    </div>
+    {% endfor %}
   </article>
   <article>
     <h2>Login</h2>
-    <img src="{% static 'img/salad.jpg' %}" />
     <p>
         Loren Ipsum
     </p>
