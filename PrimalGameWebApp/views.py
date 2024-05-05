@@ -87,12 +87,16 @@ def start_game(request):
                 # Gameinstance create successful
                 # send a signal to start a game on target RPI board
                 
+                # Access the ID of the newly created instance from the response
+                game_instance_id = response.json().get('id')
+                
                 # get the state of the target RPI board
                 # Replace `pk_value` with the actual primary key value you want to retrieve
                 rpi_state = RPiStates.objects.get(rpiboard=rpiboard)
                 # Flag signal to start the game
                 rpi_state.is_occupied = False
                 rpi_state.start_game = True  
+                rpi_state.game_instance_running = game_instance_id  
                 rpi_state.save()
                 # Redict to dashboard page
                 return redirect('/') # placeholder
